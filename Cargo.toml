@@ -1,0 +1,56 @@
+[package]
+name = "ptrguard"
+version = "0.1.0"
+description = "ptrguard: A pointer encryption library intended for Red Team implant design in Rust."
+homepage = "https://github.com/nilripper/ptrguard"
+repository = "https://github.com/nilripper/ptrguard"
+readme = "README.md"
+edition = "2024"
+
+[profile.release]
+# Optimize for size on release.
+strip = "debuginfo"
+codegen-units = 1
+opt-level = "z"
+lto = true
+
+[dependencies]
+# Cryptography
+aead = "0.5.2" # Generic cryptographic traits for Authenticated Encryption with Associated Data
+aes-gcm = "0.10.3" # AES-GCM authenticated encryption implementation
+chacha20poly1305 = "0.10.1" # ChaCha20Poly1305 authenticated encryption implementation
+hmac = "0.12.1" # Generic implementation of Hash-based Message Authentication Codes
+secrecy = "0.8.0" # For preventing accidental secret leakage
+sha2 = "0.10.8" # SHA-2 hash functions
+
+# Concurrency and Locking
+parking_lot = "0.12.1" # Provides faster and more compact mutexes and read-write locks
+
+# Utilities
+obfustr = "0.1.2" # For compile-time string obfuscation
+rand = { version = "0.8.5", features = ["std_rng"] } # For random number generation
+strum = "0.26" # Helper attributes for enums
+strum_macros = "0.26" # Macros for the strum crate
+
+# Foreign Function Interface (FFI) and System-level crates
+libc = "0.2.155" # Raw FFI bindings to the C standard library
+sysctl = "0.4" # For sysctl operations on macOS
+
+# Windows APIs
+windows-sys = { version = "0.52.0", features = [
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Memory",
+] }
+
+[dev-dependencies]
+# Dependencies for running tests and examples
+pretty_assertions = "1.4.1" # Provides more detailed assertions for tests
+
+[features]
+default = []
+# Enables obfuscation
+obfuscate = []
+# On security failure, panic
+fail_panic = []
+# On security failure, exit the process silently
+fail_exit = []

@@ -1,0 +1,11 @@
+[toolchain]
+# Specifies the release channel for the Rust compiler.
+# "nightly" is required for this project to enable unstable features,
+# such as the Allocator API (`#![feature(allocator_api)]`).
+channel = "nightly"
+
+# A list of additional components to be installed alongside the toolchain.
+components = [
+    "rustfmt", # The standard Rust code formatter to ensure consistent code style.
+    "clippy",  # The standard Rust linter to catch common mistakes and improve code quality.
+]
